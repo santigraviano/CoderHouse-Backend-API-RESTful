@@ -11,12 +11,14 @@ class Productos {
 
   add(title, price, thumbnail) {
     Productos.id += 1
-    this.items.push({
+    const item = {
       id: Productos.id,
       title,
       price,
       thumbnail
-    })
+    }
+    this.items.push(item)
+    return item
   }
 
   find(id) {
@@ -27,7 +29,6 @@ class Productos {
   }
 
   edit(id, title=null, price=null, thumbnail=null) {
-    console.log(title, price, thumbnail)
     try {
       const item = this.find(id)
       item.title = title != null ? title : item.title

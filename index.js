@@ -11,4 +11,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/api/productos', routes)
 
-app.listen(PORT, () => { console.log(`Listening to port ${PORT}`) })
+app.listen(PORT, (err) => {
+  if (err) console.log(err)
+  else console.log(`Listening to port ${PORT}`)
+})

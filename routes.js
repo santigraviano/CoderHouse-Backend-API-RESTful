@@ -8,18 +8,22 @@ router.get('/', (req, res) => {
   res.json(productos.all())
 })
 
+router.post('/', (req, res) => {
+  if (!('title' in req.body) || !('price' in req.body) || !('thumbnail' in req.body)) {
+    res.status(400).json({ error: 'No se recibieron los campos requeridos' })
+    return
+  }
+  const { title, price, thumbnail } = req.body
+  res.json(productos.add(title, price, thumbnail))
+})
+
 router.get('/:id', (req, res) => {
   try {
     res.json(productos.find(req.params.id))
   }
-  catch (error) {
-    res.json({ error })
+  catch (err) {
+    res.json({ error: err.message })
   }
-})
-
-router.post('/', (req, res) => {
-  const { title, price, thumbnail } = req.body
-  res.json(productos.add(title, price, thumbnail))
 })
 
 router.put('/:id', (req, res) => {
@@ -38,8 +42,8 @@ router.delete('/:id', (req, res) => {
     productos.delete(req.params.id)
     res.sendStatus(200)
   }
-  catch (error) {
-    res.json({ error })
+  catch (err) {
+    res.json({ error: err.message })
   }
 })
 
